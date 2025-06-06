@@ -68,6 +68,27 @@ class LinkedList {
     this.size--;
   }
 
+  // remove first
+   removeFirst() {
+        if (this.isEmpty()) return;
+        this.head = this.head.next;
+        this.size--;
+    }
+// remove last
+    removeLast() {
+        if (this.isEmpty()) return;
+        if (this.size === 1) {
+            this.head = null;
+        } else {
+            let prev = this.head;
+            while (prev.next.next) {
+                prev = prev.next;
+            }
+            prev.next = null;
+        }
+        this.size--;
+    }
+
   display() {
     if (this.isEmpty()) {
       console.log("Empty List");
