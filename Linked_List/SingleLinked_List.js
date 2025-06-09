@@ -125,6 +125,19 @@ class LinkedList {
     }
   }
 
+  // reverse
+  reverse() {
+    let curr = this.head;
+    let prev = null;
+    while (curr) {
+      let next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+    this.head = prev;
+  }
+
   display() {
     if (this.isEmpty()) {
       console.log("Empty List");
@@ -154,4 +167,4 @@ list.display();
 list.duplicate();
 list.display();
 list.evenremove();
-list.display()
+list.display();
