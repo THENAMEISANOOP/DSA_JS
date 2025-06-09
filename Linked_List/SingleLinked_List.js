@@ -33,7 +33,7 @@ class LinkedList {
     this.size++;
   }
 
-//   insert based value Add
+  //   insert based value Add
 
   insert(value, index) {
     if (index < 0 || index >= this.size) return;
@@ -51,7 +51,7 @@ class LinkedList {
     }
   }
 
-//  index based delete
+  //  index based delete
   remove(index) {
     if (index < 0 || index >= this.size) return;
 
@@ -69,25 +69,42 @@ class LinkedList {
   }
 
   // remove first
-   removeFirst() {
-        if (this.isEmpty()) return;
-        this.head = this.head.next;
-        this.size--;
+  removeFirst() {
+    if (this.isEmpty()) return;
+    this.head = this.head.next;
+    this.size--;
+  }
+  // remove last
+  removeLast() {
+    if (this.isEmpty()) return;
+    if (this.size === 1) {
+      this.head = null;
+    } else {
+      let prev = this.head;
+      while (prev.next.next) {
+        prev = prev.next;
+      }
+      prev.next = null;
     }
-// remove last
-    removeLast() {
-        if (this.isEmpty()) return;
-        if (this.size === 1) {
-            this.head = null;
+    this.size--;
+  }
+
+  // duplicate remove
+  duplicate() {
+    let curr = this.head;
+    while (curr) {
+      let runner = curr;
+      while (runner.next) {
+        if (runner.next.value === curr.value) {
+          runner.next = runner.next.next;
+          this.size--;
         } else {
-            let prev = this.head;
-            while (prev.next.next) {
-                prev = prev.next;
-            }
-            prev.next = null;
+          runner = runner.next;
         }
-        this.size--;
+      }
+      curr = curr.next;
     }
+  }
 
   display() {
     if (this.isEmpty()) {
@@ -107,9 +124,14 @@ const list = new LinkedList();
 list.prepend(30);
 list.prepend(20);
 list.append(40);
+list.prepend(20);
+list.append(40);
 list.append(50);
 list.display();
-list.insert(10,2);
-list.display();
-list.remove(2);
+// list.insert(10, 2);
+// list.display();
+// list.remove(2);
+// list.display();
+list.duplicate();
 list.display()
+
