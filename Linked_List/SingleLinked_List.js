@@ -105,6 +105,25 @@ class LinkedList {
       curr = curr.next;
     }
   }
+  // even remove
+  evenremove() {
+    let curr = this.head;
+    let prev = null;
+
+    while (curr) {
+      if (curr.value % 2 === 0) {
+        if (curr === this.head) {
+          this.head = curr.next;
+        } else {
+          prev.next = curr.next;
+        }
+        this.size--;
+      } else {
+        prev = curr;
+      }
+      curr = curr.next;
+    }
+  }
 
   display() {
     if (this.isEmpty()) {
@@ -122,8 +141,8 @@ class LinkedList {
 }
 const list = new LinkedList();
 list.prepend(30);
-list.prepend(20);
-list.append(40);
+list.prepend(21);
+list.append(41);
 list.prepend(20);
 list.append(40);
 list.append(50);
@@ -133,5 +152,6 @@ list.display();
 // list.remove(2);
 // list.display();
 list.duplicate();
+list.display();
+list.evenremove();
 list.display()
-
