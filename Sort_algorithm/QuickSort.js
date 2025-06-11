@@ -15,5 +15,34 @@ function QuickSort(arr) {
   }
   return [...QuickSort(left), pivot, ...QuickSort(right)];
 }
-const arr = [4, 2, 5, 3, 1];
+const arr = [5, 3, 8, 4];
 console.log(QuickSort(arr));
+
+
+
+
+// const arr = [5, 3, 8, 4];
+
+// Choose Pivot = 5
+
+// Partition:
+// ┌───┬───┬───┬───┐
+// │ 5 │ 3 │ 8 │ 4 │
+// └───┴───┴───┴───┘
+//        ↑       ↑
+//    < pivot   > pivot
+
+// Left = [3, 4], Right = [8]
+
+// Sort Left:
+// Pivot = 3 → compare 3 & 4 → OK
+// Left sorted: [3, 4]
+
+// Join:
+// Left + Pivot + Right
+// [3, 4] + [5] + [8]
+
+// Final Result:
+// ┌───┬───┬───┬───┐
+// │ 3 │ 4 │ 5 │ 8 │
+// └───┴───┴───┴───┘ ✅

@@ -19,5 +19,30 @@ function merge(left, right) {
   }
   return [...sortarr, ...left, ...right];
 }
-const arr = [1, 3, 6, 4, 5, 2];
+const arr = [5, 3, 8, 4];
 console.log(mergesort(arr));
+
+
+
+
+// Split:
+// [5, 3, 8, 4]
+//      ↓
+// [5, 3]     [8, 4]
+//  ↓          ↓
+// [5] [3]     [8] [4]
+
+// Merge:
+// [5] + [3] → compare → 3 < 5
+// ┌───┬───┐        ┌───┬───┐
+// │ 3 │ 5 │        │ 4 │ 8 │
+// └───┴───┘        └───┴───┘
+
+// Final Merge:
+// compare 3 & 4 → 3
+// compare 5 & 4 → 4
+// compare 5 & 8 → 5
+// 8 remains
+// ┌───┬───┬───┬───┐
+// │ 3 │ 4 │ 5 │ 8 │
+// └───┴───┴───┴───┘ ✅
