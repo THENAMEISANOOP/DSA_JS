@@ -76,7 +76,7 @@ class BST {
         while (root.right) root = root.right;
         return root.value;
     }
-    
+
      // 🔍 Search (wrapper + helper)
     search(value) {
         return this._search(this.root, value);
@@ -121,6 +121,12 @@ class BST {
             this.postorder(root.left);
             this.postorder(root.right);
             console.log(root.value);
+        }
+    }
+    // 🔁 Level Order (BFS)
+        levelOrder() {
+        for (let value of this.nodes) {
+            console.log(value);
         }
     }
 }
