@@ -4,48 +4,38 @@ class Graph {
     }
 
     addNode(node) {
-        if (!this.adjList[node]) {
-            this.adjList[node] = [];
-        }
+        if (!this.adjList[node]) this.adjList[node] = [];
     }
 
-    addEdge(node1, node2, weight) {
+    addEdge(node1, node2) {
         this.addNode(node1);
         this.addNode(node2);
-        this.adjList[node1].push([node2, weight]);
-        this.adjList[node2].push([node1, weight]); // remove this line if directed
+        this.adjList[node1].push(node2);
+        this.adjList[node2].push(node1); // Remove for directed graph
     }
 
-    dijkstra(start) {
+    printGraph() {
+        for (let node in this.adjList) {
+            console.log(`${node} -> ${this.adjList[node].join(', ')}`);
+        }
+    }
+
+    bfsShortestDistance(start) {
         const dist = {};
         const visited = new Set();
+        const queue = [start];
 
-        // Initialize distances
-        for (let node in this.adjList) {
-            dist[node] = Infinity;
-        }
         dist[start] = 0;
+        visited.add(start);
 
-        while (visited.size < Object.keys(this.adjList).length) {
-            let currNode = null;
-            let minDist = Infinity;
+        while (queue.length) {
+            const node = queue.shift();
 
-            for (let node in dist) {
-                if (!visited.has(node) && dist[node] < minDist) {
-                    minDist = dist[node];
-                    currNode = node;
-                }
-            }
-
-            if (currNode === null) break; // no reachable node left
-            visited.add(currNode);
-
-            for (let [neighbor, weight] of this.adjList[currNode]) {
+            for (let neighbor of this.adjList[node]) {
                 if (!visited.has(neighbor)) {
-                    const newDist = dist[currNode] + weight;
-                    if (newDist < dist[neighbor]) {
-                        dist[neighbor] = newDist;
-                    }
+                    visited.add(neighbor);
+                    dist[neighbor] = dist[node] + 1;
+                    queue.push(neighbor);
                 }
             }
         }
@@ -53,24 +43,51 @@ class Graph {
         return dist;
     }
 
-    printGraph() {
-        for (let node in this.adjList) {
-            console.log(`${node} -> ${this.adjList[node].map(n => `${n[0]}(${n[1]})`).join(', ')}`);
+    dfs(start, visited = new Set()) {
+        console.log(start);
+        visited.add(start);
+        for (let neighbor of this.adjList[start]) {
+            if (!visited.has(neighbor)) {
+                this.dfs(neighbor, visited);
+            }
         }
+    }
+
+    dfsPaths(start, end, path = [], allPaths = []) {
+        path.push(start);
+
+        if (start === end) {
+            allPaths.push([...path]);
+        } else {
+            for (let neighbor of this.adjList[start]) {
+                if (!path.includes(neighbor)) {
+                    this.dfsPaths(neighbor, end, path, allPaths);
+                }
+            }
+        }
+
+        path.pop();
+        return allPaths;
     }
 }
 
-
 const g = new Graph();
 
-g.addEdge('A', 'B', 1);
-g.addEdge('A', 'C', 4);
-g.addEdge('B', 'C', 2);
-g.addEdge('B', 'D', 5);
-g.addEdge('C', 'D', 1);
+g.addEdge('A', 'B');
+g.addEdge('A', 'C');
+g.addEdge('B', 'D');
+g.addEdge('C', 'D');
+g.addEdge('C', 'E');
 
 console.log("Graph:");
 g.printGraph();
 
-console.log("\nShortest distances from A:");
-console.log(g.dijkstra('A'));
+console.log("\nBFS shortest distance from A:");
+console.log(g.bfsShortestDistance('A'));
+
+console.log("\nDFS from A:");
+g.dfs('A');
+
+console.log("\nAll paths from A to E (DFS backtracking):");
+console.log(g.dfsPaths('A', 'E'));
+
