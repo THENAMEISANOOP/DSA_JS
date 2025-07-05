@@ -76,6 +76,20 @@ class BST {
         while (root.right) root = root.right;
         return root.value;
     }
+    
+     // 🔍 Search (wrapper + helper)
+    search(value) {
+        return this._search(this.root, value);
+    }
+
+    _search(root, value) {
+        if (!root) return false;
+        if (root.value === value) return true;
+        return value < root.value
+            ? this._search(root.left, value)
+            : this._search(root.right, value);
+    }
+
 
     // 📏 Height
     height(root) {
