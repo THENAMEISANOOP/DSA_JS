@@ -31,7 +31,7 @@ class BST {
         this.root = this._delete(this.root, value);
     }
 
-    _delete(root, value) {
+    _delete(root, value) {  
         if (!root) return null;
 
         if (value < root.value) {
