@@ -27,7 +27,7 @@ class BST {
     }
 
     // ✅ Delete (same structure as insert)
-    delete(value) {
+    delete(value) {                                                                              
         this.root = this._delete(this.root, value);
     }
 
